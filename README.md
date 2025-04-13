@@ -1,4 +1,4 @@
-# Orange ID by Bedrock – React (NPM) Integration Example
+# Orange ID by Bedrock – React (NPM) Integration Guide
 
 ## How to Install
 
@@ -18,9 +18,8 @@ const Provider: React.FC<ProviderProps> = ({ children }) => {
   return (
     <BedrockPassportProvider
       baseUrl="https://api.bedrockpassport.com" // Base API URL – no need to change this. Leave as is.
-      authCallbackUrl="http://<your_url>/auth/callback"  // This page must exist and handle the login callback. Replace <yoururl> with your actual domain.
+      authCallbackUrl="https://yourdomain.com/auth/callback" // Replace with your actual callback URL
       tenantId="orange-abc123"  // Your assigned tenant ID - you can request one at https://vibecodinglist.com/orange-id-integration
-      walletConnectId="591d21ef88b24c6837599a5c2a0ce03d" // Optional: WalletConnect Project ID. The default is fine, but you can replace it with your own.
     >
       {children}
     </BedrockPassportProvider>
@@ -79,29 +78,37 @@ import "@bedrock_org/passport/dist/style.css";
 
 ...
 <LoginPanel
-  panelClass="container p-2 md:p-8 rounded-2xl max-w-[480px]"
-  buttonClass="hover:border-orange-500"
-  headerClass="justify-center"
+  // Content options
   title="Sign in to"
-  titleClass="text-xl font-bold"
   logo="https://irp.cdn-website.com/e81c109a/dms3rep/multi/orange-web3-logo-v2a-20241018.svg"
   logoAlt="Orange Web3"
-  logoClass="ml-2 md:h-8 h-6"
-  showConnectWallet={false}
   walletButtonText="Connect Wallet"
+  showConnectWallet={false}
   separatorText="OR"
+
+  // Feature toggles
+  features={{
+    enableWalletConnect: false,
+    enableAppleLogin: true,
+    enableGoogleLogin: true,
+    enableEmailLogin: true,
+   }}
+
+  // Style options
+  titleClass="text-xl font-bold"
+  logoClass="ml-2 md:h-8 h-6"
+  panelClass="container p-2 md:p-8 rounded-2xl max-w-[480px]"
+  buttonClass="hover:border-orange-500"
   separatorTextClass="bg-orange-900 text-gray-500"
   separatorClass="bg-orange-900"
   linkRowClass="justify-center"
+  headerClass="justify-center"
 />
 
 ```
 
 Use tailwind variable for the class customization: refer to [tailwindcss](https://tailwindcss.com/docs)
 
-[Example Integration](https://github.com/rfl-nftplatform/bedrock-passport-example)
-
-The library is still in development, more features will be added in the future.
 
 ### Styling available for the panel
 
@@ -109,23 +116,103 @@ The library is still in development, more features will be added in the future.
 
 | Parameter            | Description                                                  |
 | -------------------- | ------------------------------------------------------------ |
-| `panelClass`         | panel styling                                                |
-| `buttonClass`        | all button styling                                           |
-| `headerClass`        | header styling                                               |
-| `title`              | title of the panel                                           |
-| `titleClass`         | title styling                                                |
-| `logo`               | logo url                                                     |
-| `logoAlt`            | logo alt string                                              |
-| `logoClass`          | logo styling                                                 |
-| `showConnectWallet`  | boolean, false by default                                    |
-| `walletButtonText`   | string in wallet button text                                 |
-| `walletButtonClass`  | wallet button styling, by default will follow button styling |
-| `separatorText`      | text in the middle of separator                              |
-| `separatorTextClass` | separator text styling                                       |
-| `separatorClass`     | separator styling                                            |
+| `panelClass`         | Panel styling                                                |
+| `buttonClass`        | All button styling                                           |
+| `headerClass`        | Header styling                                               |
+| `title`              | Title of the panel                                           |
+| `titleClass`         | Title styling                                                |
+| `logo`               | Logo url                                                     |
+| `logoAlt`            | Logo alt string                                              |
+| `logoClass`          | Logo styling                                                 |
+| `showConnectWallet`  | Boolean, false by default                                    |
+| `walletButtonText`   | String in wallet button text                                 |
+| `walletButtonClass`  | Wallet button styling, by default will follow button styling |
+| `separatorText`      | Text in the middle of separator                              |
+| `separatorTextClass` | Separator text styling                                       |
+| `separatorClass`     | Separator styling                                            |
+| `linkRowClass`       | Styling for the row containing login links                   |
 
-### example of using the user hook, check if user is logged in
+### Example of Using the User Hook – Check if User is Logged In
 
 ```jsx
 const { isLoggedIn } = useBedrockPassport();
 ```
+
+## 📦 User Object Returned After Login
+
+When a user logs in successfully using Bedrock Passport, you can access a structured user object like the following:
+
+```json
+{
+  "id": "clf8138x000045o01a4p2ajpi",
+  "email": "testuser@example.com",
+  "name": "Test User",
+  "displayName": "testname",
+  "bio": "This is a sample biography.",
+  "picture": "https://cdn.example.com/images/sample_user.png",
+  "banner": "https://cdn.example.com/images/sample_user_banner.png",
+  "ethAddress": "0x1234567890abcdef1234567890abcdef12345678",
+  "provider": "google",
+  "createdAt": "2025-04-07T06:21:36.674Z"
+}
+```
+
+### Explanation of Fields
+
+| Key           | Description                                                                                                                      |
+|---------------|----------------------------------------------------------------------------------------------------------------------------------|
+| `id`          | Unique Orange ID for the user.                                                                                                   |
+| `email`       | User's email address.                                                                                                            |
+| `name`        | Full name from the provider.                                                                                                     |
+| `displayName` | User-chosen display name. (Can be updated at [vibecodinglist.com/profile](https://vibecodinglist.com/profile))                     |
+| `bio`         | A brief biography of the user.                                                                                                   |
+| `picture`     | URL to the user's profile picture. (Can be updated at [vibecodinglist.com/profile](https://vibecodinglist.com/profile))             |
+| `banner`      | URL to the user's banner image. (Can be updated at [vibecodinglist.com/profile](https://vibecodinglist.com/profile))                |
+| `ethAddress`  | Ethereum wallet address (if connected).                                                                                          |
+| `provider`    | Login method used (e.g., `google`, `apple`, `wallet`).                                                                           |
+| `createdAt`   | Timestamp of account creation.                                                                                                   |
+
+## ⚙️ Features Configuration
+
+You can customize which login methods to show by passing a `features` object to the `<LoginPanel>` component:
+
+### Example (React / NPM):
+
+```tsx
+<LoginPanel
+  ...
+  features={{
+    enableWalletConnect: true,
+    enableAppleLogin: true,
+    enableGoogleLogin: true,
+    enableEmailLogin: true,
+  }}
+/>
+```
+
+### Available Feature Flags
+
+| Feature                | Description                              |
+|------------------------|------------------------------------------|
+| `enableWalletConnect`  | Enables Web3 wallet login                |
+| `enableAppleLogin`     | Enables Apple ID login                   |
+| `enableGoogleLogin`    | Enables Google login                     |
+| `enableEmailLogin`     | Enables email-based login                |
+
+
+
+
+## 🛠 Troubleshooting
+
+- **Widget not appearing?**  
+  Open your browser's developer tools and check for missing scripts or React errors.
+
+- **Authentication callback not working?**  
+  Verify that `authCallbackUrl` matches the one registered on the platform and that URL parameters (`token` and `refreshToken`) are handled correctly.
+
+- **Styling issues?**  
+  Ensure Tailwind CSS is loaded or replace the class names with your custom CSS definitions.
+
+---
+
+You're now ready to integrate Orange ID by Bedrock into your React application!
