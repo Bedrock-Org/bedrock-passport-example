@@ -1,13 +1,4 @@
-# Orange ID by Bedrock Integration Example
-
-<!--toc:start-->
-
-- [Bedrock passport integration example](#bedrock-passport-integration-example)
-  - [How to Install](#how-to-install)
-  - [How to integrate](#how-to-integrate)
-    - [Configuration Options](#configuration-options)
-  - [How to use](#how-to-use) - [Styling available for the panel](#styling-available-for-the-panel) - [Configuration Options](#configuration-options) - [example of using the user hook, check if user is logged in](#example-of-using-the-user-hook-check-if-user-is-logged-in)
-  <!--toc:end-->
+# Orange ID by Bedrock – React (NPM) Integration Example
 
 ## How to Install
 
