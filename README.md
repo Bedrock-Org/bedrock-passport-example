@@ -78,15 +78,15 @@ import "@bedrock_org/passport/dist/style.css";
 
 ...
 <LoginPanel
-  // Content options
+  // Content options — No changes needed unless specific customization is required
   title="Sign in to"
-  logo="https://irp.cdn-website.com/e81c109a/dms3rep/multi/orange-web3-logo-v2a-20241018.svg"
+  logo="https://irp.cdn-website.com/e81c109a/dms3rep/multi/orange-web3-logo-v2a-20241018.svg" // keep the Orange Logo
   logoAlt="Orange Web3"
   walletButtonText="Connect Wallet"
   showConnectWallet={false}
   separatorText="OR"
 
-  // Feature toggles
+  // Feature toggles — Adjust these based on which login methods you want to support
   features={{
     enableWalletConnect: false,
     enableAppleLogin: true,
@@ -94,7 +94,7 @@ import "@bedrock_org/passport/dist/style.css";
     enableEmailLogin: true,
    }}
 
-  // Style options
+  // Style options — Keep as-is unless UI tweaks are needed
   titleClass="text-xl font-bold"
   logoClass="ml-2 md:h-8 h-6"
   panelClass="container p-2 md:p-8 rounded-2xl max-w-[480px]"
