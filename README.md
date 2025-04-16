@@ -138,6 +138,16 @@ Use tailwind variable for the class customization: refer to [tailwindcss](https:
 const { isLoggedIn } = useBedrockPassport();
 ```
 
+### Example of Signing Out a User
+
+```jsx
+const { signOut } = useBedrockPassport();
+const handleLogout = async () => {
+  await signOut();
+  // User is now logged out
+};
+```
+
 ## 📦 User Object Returned After Login
 
 When a user logs in successfully using Bedrock Passport, you can access a structured user object like the following:
@@ -171,34 +181,6 @@ When a user logs in successfully using Bedrock Passport, you can access a struct
 | `ethAddress`  | Ethereum wallet address (if connected).                                                                                          |
 | `provider`    | Login method used (e.g., `google`, `apple`, `wallet`).                                                                           |
 | `createdAt`   | Timestamp of account creation.                                                                                                   |
-
-## ⚙️ Features Configuration
-
-You can customize which login methods to show by passing a `features` object to the `<LoginPanel>` component:
-
-### Example (React / NPM):
-
-```tsx
-<LoginPanel
-  ...
-  features={{
-    enableWalletConnect: true,
-    enableAppleLogin: true,
-    enableGoogleLogin: true,
-    enableEmailLogin: true,
-  }}
-/>
-```
-
-### Available Feature Flags
-
-| Feature                | Description                              |
-|------------------------|------------------------------------------|
-| `enableWalletConnect`  | Enables Web3 wallet login                |
-| `enableAppleLogin`     | Enables Apple ID login                   |
-| `enableGoogleLogin`    | Enables Google login                     |
-| `enableEmailLogin`     | Enables email-based login                |
-
 
 
 
