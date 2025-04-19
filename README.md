@@ -10,7 +10,7 @@ This guide explains how to integrate the Bedrock Passport authentication widget 
 ## How to Install
 
 ```bash
-npm i @bedrock_org/passport
+npm i @bedrock_org/passport@1.0.1
 ```
 
 ## How to integrate
