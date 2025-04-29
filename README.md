@@ -98,7 +98,7 @@ import "@bedrock_org/passport/dist/style.css";
     enableWalletConnect: false,
     enableAppleLogin: true,
     enableGoogleLogin: true,
-    enableEmailLogin: true,
+    enableEmailLogin: false,
    }}
 
   // Style options — Keep as-is unless UI tweaks are needed
