@@ -4,13 +4,17 @@ This guide explains how to integrate the Bedrock Passport authentication widget 
 
 > ⚠️ **Before You Start**  
 >  
-> To use the Orange ID widget, you must [create a Project ID](https://vibecodinglist.com/orange-id-integration) and **add it as your `tenantId`** in the configuration.  
+> To use the Orange ID widget, you must [create a Project ID and API Key](https://vibecodinglist.com/orange-id-integration) and **add it as your `tenantId`** & `subscriptionKey`** in the configuration.  
 > You'll also need to **whitelist your project URLs via the link above** to enable authentication on your domain.
 
 ## How to Install
 
 ```bash
-npm i @bedrock_org/passport
+# React 18 project
+npm install @bedrock_org/passport      
+
+# React 19 project
+npm install @bedrock_org/passport@next  
 ```
 
 ## How to integrate
@@ -27,6 +31,7 @@ const Provider: React.FC<ProviderProps> = ({ children }) => {
       baseUrl="https://api.bedrockpassport.com" // Base API URL – no need to change this. Leave as is.
       authCallbackUrl="https://yourdomain.com/auth/callback" // Replace with your actual callback URL
       tenantId="orange-abc123"  // Your assigned tenant ID - you can request one at https://vibecodinglist.com/orange-id-integration
+      subscriptionKey="your_API_Key" // Your assigned API Key - you can request one at https://vibecodinglist.com/orange-id-integration
     >
       {children}
     </BedrockPassportProvider>
@@ -42,6 +47,7 @@ const Provider: React.FC<ProviderProps> = ({ children }) => {
 | `baseUrl`         | The Bedrock Passport API base URL                           |
 | `authCallbackUrl` | The URL where users will be redirected after authentication |
 | `tenantId`        | Your Bedrock Passport tenant identifier                     |
+| `subscriptionKey` | Your Bedrock Passport API Key                               |
 | `walletConnectId` | Your WalletConnect project ID for wallet connections        |
 
 Create the callback page for handling the token from server
