@@ -151,13 +151,38 @@ Use tailwind variable for the class customization: refer to [tailwindcss](https:
 const { isLoggedIn } = useBedrockPassport();
 ```
 
-### Example of Signing Out a User
+### Logout Implementation with JWT Token
+
+If you want to invalidate the server session, **POST** `https://api.bedrockpassport.com/api/v1/auth/logout` with `Authorization: Bearer <accessToken>`, then call `signOut()` to clear client state. Store `token`/`refreshToken` during the auth callback so the access token is available.
 
 ```jsx
+import { useBedrockPassport } from "@bedrock_org/passport";
+
 const { signOut } = useBedrockPassport();
+
 const handleLogout = async () => {
+  try {
+    const accessToken =
+      localStorage.getItem("bedrock:accessToken") ||
+      sessionStorage.getItem("bedrock:accessToken");
+    if (accessToken) {
+      await fetch("https://api.bedrockpassport.com/api/v1/auth/logout", {
+        method: "POST",
+        headers: { Authorization: `Bearer ${accessToken}` },
+      });
+    }
+  } catch {
+    // ignore network errors; still clear client state
+  }
+
   await signOut();
-  // User is now logged out
+
+  try {
+    localStorage.removeItem("bedrock:accessToken");
+    localStorage.removeItem("bedrock:refreshToken");
+    sessionStorage.removeItem("bedrock:accessToken");
+    sessionStorage.removeItem("bedrock:refreshToken");
+  } catch {}
 };
 ```
 
